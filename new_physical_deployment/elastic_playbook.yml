@@ -1,0 +1,8 @@
+﻿
+---
+# tasks file for dynamic_motd
+- name: Configure Dynamic motd
+  hosts: localhost
+  become: yes
+  roles:
+    - new_physical_deployment
