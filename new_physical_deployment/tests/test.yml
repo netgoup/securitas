@@ -1,5 +1,0 @@
----
-- hosts: localhost
-  remote_user: root
-  roles:
-    - /Users/manuelbarraganarevalo/Projects/securitas/new_physical_deployment
