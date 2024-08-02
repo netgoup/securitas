@@ -1,0 +1,14 @@
+﻿# elasticsearch.yml
+
+cluster.name: sd-elastic-pro-01
+node.name: hot-poz-11
+path.data: /opt/hot1/elasticseaarch/data
+path.logs: /opt/hot1/elasticseaarch/logs
+node.roles: ['data_hot', 'data_content', 'ingest']
+
+
+
+
+OS: MacOSX 14.5
+Hostname: MacBook-Pro-de-Manuel
+IP Address: 192.168.1.78

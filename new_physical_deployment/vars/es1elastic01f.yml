@@ -1,0 +1,17 @@
+cluster_name: sd-elastic-pro-01
+node_attr_cpd: pozuelo
+node_attr_server: S1
+nodes:
+  - hot1
+  - hot2
+  
+node_hot1:
+  node_name: hot-poz-11
+  node_roles: [data_hot, data_content, ingest]
+  data_path: /opt/hot1/elasticseaarch/data
+  log_path: /opt/hot1/elasticseaarch/logs
+node_hot2:
+  node_name: hot-poz-12
+  node_roles: [data_hot, data_content, ingest]
+  data_path: /opt/hot2/elasticseaarch/data
+  log_path: /opt/hot2/elasticseaarch/logs

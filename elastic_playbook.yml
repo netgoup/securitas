@@ -1,8 +1,7 @@
 ﻿
 ---
 # tasks file for dynamic_motd
-- name: Configure Dynamic motd
+- name: Configure elastic nodes
   hosts: localhost
-  become: yes
   roles:
     - new_physical_deployment

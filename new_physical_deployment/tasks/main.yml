@@ -1,7 +1,10 @@
 ---
 # tasks file for /Users/manuelbarraganarevalo/Projects/securitas/new_physical_deployment
+- name: "include host vars"
+  include_vars:
+    file: es1elastic01f.yml
 - name: Copy dynamic motd template
   template:
-    src: /Users/manuelbarraganarevalo/Projects/securitas/test.j2
-    dest: /Users/manuelbarraganarevalo/Projects/securitas/test.yml
-  become: yes
+    src: elastic.jinja
+    dest: /Users/manuelbarraganarevalo/Projects/securitas/{{ item }}/test.yml
+  loop: "{{ nodes }}"

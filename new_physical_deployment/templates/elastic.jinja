@@ -1,7 +1,12 @@
-﻿{{ dummy_text }}
+﻿# elasticsearch.yml
 
 
-System information:
+cluster.name: {{ cluster_name }}
+
+
+{{ lookup('ansible.builtin.vars', 'node_' + item) | to_yaml}}
+
+
 
 OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
 Hostname: {{ ansible_hostname }}
