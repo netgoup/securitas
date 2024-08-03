@@ -2,7 +2,7 @@
 # tasks file for /Users/manuelbarraganarevalo/Projects/securitas/new_physical_deployment
 - name: "include host vars"
   include_vars:
-    file: es1elastic01f.yml
+    file: "{{ ansible_hostname }}.yml"
 - name: Copy dynamic motd template
   template:
     src: elastic.jinja

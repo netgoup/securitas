@@ -12,6 +12,6 @@ node_roles: [data_hot, data_content, ingest]
 
 
 
-OS: MacOSX 14.5
+OS: MacOSX 14.6
 Hostname: MacBook-Pro-de-Manuel
 IP Address: 192.168.1.78
