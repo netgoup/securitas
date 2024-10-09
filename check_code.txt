@@ -1,0 +1,59 @@
+input {
+  stdin { }  # Assuming you are inputting the JSON via stdin, adjust based on your actual input method.
+}
+
+filter {
+  json {
+    source => "message"  # The source of the JSON message. Adjust based on your field name if different.
+  }
+
+  # Extract resource attributes
+  if [resource][attributes] {
+    mutate {
+      add_field => {
+        "service_name" => "%{[resource][attributes][0][value][stringValue]}"
+      }
+    }
+  }
+
+  # Extract scopeLogs and logRecords fields
+  if [scopeLogs][0][logRecords][0] {
+    mutate {
+      add_field => {
+        "trace_id"           => "%{[scopeLogs][0][logRecords][0][traceId]}"
+        "span_id"            => "%{[scopeLogs][0][logRecords][0][spanId]}"
+        "severity_text"      => "%{[scopeLogs][0][logRecords][0][severityText]}"
+        "observed_time"      => "%{[scopeLogs][0][logRecords][0][observedTimeUnixNano]}"
+        "log_time"           => "%{[scopeLogs][0][logRecords][0][timeUnixNano]}"
+        "severity_number"    => "%{[scopeLogs][0][logRecords][0][severityNumber]}"
+        "log_body"           => "%{[scopeLogs][0][logRecords][0][body][stringValue]}"
+      }
+    }
+
+    # Extract specific attributes inside logRecords
+    if [scopeLogs][0][logRecords][0][attributes] {
+      mutate {
+        add_field => {
+          "url"               => "%{[scopeLogs][0][logRecords][0][attributes][0][value][stringValue]}"
+          "taxonomy_id"       => "%{[scopeLogs][0][logRecords][0][attributes][1][value][intValue]}"
+          "direction"         => "%{[scopeLogs][0][logRecords][0][attributes][2][value][intValue]}"
+          "request_message"   => "%{[scopeLogs][0][logRecords][0][attributes][3][value][stringValue]}"
+          "response_message"  => "%{[scopeLogs][0][logRecords][0][attributes][4][value][stringValue]}"
+          "request_time"      => "%{[scopeLogs][0][logRecords][0][attributes][5][value][stringValue]}"
+          "response_time"     => "%{[scopeLogs][0][logRecords][0][attributes][6][value][stringValue]}"
+          "response_code"     => "%{[scopeLogs][0][logRecords][0][attributes][7][value][intValue]}"
+          "emitter_id"        => "%{[scopeLogs][0][logRecords][0][attributes][8][value][intValue]}"
+          "http_method"       => "%{[scopeLogs][0][logRecords][0][attributes][9][value][stringValue]}"
+          "response_cache"    => "%{[scopeLogs][0][logRecords][0][attributes][10][value][intValue]}"
+          "user_id_type"      => "%{[scopeLogs][0][logRecords][0][attributes][11][value][stringValue]}"
+        }
+      }
+    }
+  }
+}
+
+output {
+  stdout {
+    codec => rubydebug  # This outputs the parsed fields to the console in a human-readable format.
+  }
+}
