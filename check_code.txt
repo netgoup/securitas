@@ -30,24 +30,18 @@ filter {
       }
     }
 
-    # Extract specific attributes inside logRecords
-    if [scopeLogs][0][logRecords][0][attributes] {
-      mutate {
-        add_field => {
-          "url"               => "%{[scopeLogs][0][logRecords][0][attributes][0][value][stringValue]}"
-          "taxonomy_id"       => "%{[scopeLogs][0][logRecords][0][attributes][1][value][intValue]}"
-          "direction"         => "%{[scopeLogs][0][logRecords][0][attributes][2][value][intValue]}"
-          "request_message"   => "%{[scopeLogs][0][logRecords][0][attributes][3][value][stringValue]}"
-          "response_message"  => "%{[scopeLogs][0][logRecords][0][attributes][4][value][stringValue]}"
-          "request_time"      => "%{[scopeLogs][0][logRecords][0][attributes][5][value][stringValue]}"
-          "response_time"     => "%{[scopeLogs][0][logRecords][0][attributes][6][value][stringValue]}"
-          "response_code"     => "%{[scopeLogs][0][logRecords][0][attributes][7][value][intValue]}"
-          "emitter_id"        => "%{[scopeLogs][0][logRecords][0][attributes][8][value][intValue]}"
-          "http_method"       => "%{[scopeLogs][0][logRecords][0][attributes][9][value][stringValue]}"
-          "response_cache"    => "%{[scopeLogs][0][logRecords][0][attributes][10][value][intValue]}"
-          "user_id_type"      => "%{[scopeLogs][0][logRecords][0][attributes][11][value][stringValue]}"
-        }
-      }
+    # Dynamically parse the attributes array
+    ruby {
+      code => '
+        attributes = event.get("[scopeLogs][0][logRecords][0][attributes]")
+        if attributes.is_a?(Array)
+          attributes.each do |attribute|
+            key = attribute["key"]
+            value = attribute["value"].values.first
+            event.set(key, value)
+          end
+        end
+      '
     }
   }
 }
