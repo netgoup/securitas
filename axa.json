@@ -1,0 +1,104 @@
+{
+    "resource": {
+        "attributes": [
+            {
+                "value": {
+                    "stringValue": "unknown_service:w3wp"
+                },
+                "key": "service.name"
+            }
+        ]
+    },
+    "scopeLogs": [
+        {
+            "logRecords": [
+                {
+                    "traceId": "",
+                    "spanId": "",
+                    "severityText": "Information",
+                    "observedTimeUnixNano": "1728489854695502700",
+                    "timeUnixNano": "1728489854695502700",
+                    "attributes": [
+                        {
+                            "value": {
+                                "stringValue": "http://svc-env7.ppglobaldirect.intraxa/AgdfApiAggregators/api/v1/AGDF/DirectAssurance/Health/Standard/Aggregators/calculate/LeLynx"
+                            },
+                            "key": "Url"
+                        },
+                        {
+                            "value": {
+                                "intValue": "58"
+                            },
+                            "key": "TaxonomyId"
+                        },
+                        {
+                            "value": {
+                                "intValue": "1"
+                            },
+                            "key": "Direction"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "{\"aggName\":\"LeLynx\",\"insuredPeople\":[{\"dateOfBirth\":\"1991-10-13\",\"job\":\"Employee\",\"roleInInsurance\":\"HealthContractPolicyHolder\",\"socialRegime\":\"GeneralRegime\"},{\"dateOfBirth\":\"1991-10-13\",\"job\":\"Employee\",\"roleInInsurance\":\"HealthContractSpouse\",\"socialRegime\":\"GeneralRegime\"},{\"dateOfBirth\":\"2019-10-26\",\"roleInInsurance\":\"HealthContractOtherInsuredPerson\",\"socialRegime\":\"GeneralRegime\"}],\"needs\":{\"careLevel\":\"Medium\",\"dentalLevel\":\"Maximum\",\"hospitalizationLevel\":\"Medium\",\"opticalLevel\":\"Minimum\"},\"aggLeadId\":\"727373\",\"city\":\"LONGUEVILLE\",\"isCurrentlyInsured\":true,\"isInsuredSinceMoreThan1Year\":true,\"renewalMonth\":\"Jan\",\"requestedStartDate\":\"2024-11-13\",\"zipCode\":\"47200\"}"
+                            },
+                            "key": "RequestMessage"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "{\"message\":\"Error : All retries to service failed\\r\\nCommandHandler threw an exception handling Command\\r\\nMessage Type Sandpiper.Insurance.ProductInterface.Commands.CalculateDomainSessionCommand\\r\\nDomainSession = Axa.Darwin.DomainModel.Mapping.Session.DomainSession\\r\\nExternalRatingModel = Tariff\\r\\nId = 6a0cf8ee-20ca-4b7f-9bc4-da0dc2813723\\r\\nRemapAllEntities = True\\r\\nSaveDomainChanges = True\\r\\n\\r\\n\"}"
+                            },
+                            "key": "ResponseMessage"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "09/10/2024 16:04:14"
+                            },
+                            "key": "RequestTime"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "09/10/2024 16:04:16"
+                            },
+                            "key": "ResponseTime"
+                        },
+                        {
+                            "value": {
+                                "intValue": "500"
+                            },
+                            "key": "ResponseCode"
+                        },
+                        {
+                            "value": {
+                                "intValue": "52"
+                            },
+                            "key": "EmitterId"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "POST"
+                            },
+                            "key": "HttpMethod"
+                        },
+                        {
+                            "value": {
+                                "intValue": "0"
+                            },
+                            "key": "ResponseFromCache"
+                        },
+                        {
+                            "value": {
+                                "stringValue": "Unknown"
+                            },
+                            "key": "UserIdType"
+                        }
+                    ],
+                    "severityNumber": 9,
+                    "body": {
+                        "stringValue": "{\"aggName\":\"LeLynx\",\"insuredPeople\":[{\"dateOfBirth\":\"1991-10-13\",\"job\":\"Employee\",\"roleInInsurance\":\"HealthContractPolicyHolder\",\"socialRegime\":\"GeneralRegime\"},{\"dateOfBirth\":\"1991-10-13\",\"job\":\"Employee\",\"roleInInsurance\":\"HealthContractSpouse\",\"socialRegime\":\"GeneralRegime\"},{\"dateOfBirth\":\"2019-10-26\",\"roleInInsurance\":\"HealthContractOtherInsuredPerson\",\"socialRegime\":\"GeneralRegime\"}],\"needs\":{\"careLevel\":\"Medium\",\"dentalLevel\":\"Maximum\",\"hospitalizationLevel\":\"Medium\",\"opticalLevel\":\"Minimum\"},\"aggLeadId\":\"727373\",\"city\":\"LONGUEVILLE\",\"isCurrentlyInsured\":true,\"isInsuredSinceMoreThan1Year\":true,\"renewalMonth\":\"Jan\",\"requestedStartDate\":\"2024-11-13\",\"zipCode\":\"47200\"}"
+                    }
+                }
+            ],
+            "scope": {}
+        }
+    ]
+}
