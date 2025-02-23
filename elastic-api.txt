@@ -1,0 +1,503 @@
+POST ra-eip-eip1015-metrics-pro-35/_rollover?dry_run
+POST ra-eip-eip1015-metrics-dev-ft-7/_rollover
+
+GET _cat/indices?v&s=index
+
+POST be-eip-global-90-2024.08.29-000192/_refresh
+
+GET be-eip-global-90-2024.08.29-000192/_segments
+
+GET be-*/_stats/store
+
+GET _cat/nodes?v&s=name
+
+GET _cat/health?pretty&v
+
+GET _cluster/settings?include_defaults=true
+
+GET _cat/nodes?v&s=master,name&h=name,master,node.role,heap.percent,disk.used_percent,cpu
+GET _nodes/stats?human&filter_path=nodes.*.name,nodes.*.indices.indexing
+
+GET _cat/thread_pool/write,search?v=true&s=n,nn&h=n,nn,queue,active,rejected,completed,pool_size,queue_size,type
+
+GET _stats?level=shards&human&expand_wildcards=all&filter_path=indices.*.total.indexing.index_total
+GET _cat/tasks?v&s=time:desc&h=type,action,running_time,node,cancellable
+
+GET _tasks?human&detailed
+
+GET _cat/allocation?v&s=node&h=node,shards,disk.percent,disk.indices,disk.used
+
+GET _cluster/allocation/explain
+
+GET /_ssl/certificates
+
+GET /_ilm/status
+
+GET prod-go_waf-waf5-2024.10.14-001180/_stats
+PUT _watcher/watch/4a0e3144-37a2-4e68-8f15-d7a4a23354fc/_deactivate
+PUT _watcher/watch/4a0e3144-37a2-4e68-8f15-d7a4a23354fc/_activate
+GET _watcher/stats
+GET _watcher/stats/current_watches
+
+GET _ilm/policy
+
+GET be-waf-global-60-2024.07.11-000011/_search
+
+GET _cat/tasks?&v
+GET _cat/tasks?&actions=*search
+GET _cat/tasks?&actions=*write*
+
+POST oneid-global-2024.03.28-000036-reindexed/_ilm/remove
+
+PUT *reindex/_settings
+{
+  "index": {
+    "lifecycle": {
+      "name": "reindex-ilm"
+    }
+  }
+}
+
+POST _tasks/_cancel?actions=*search
+
+POST /_cluster/reroute?metric=none
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "all"
+  }
+}
+PUT /_cluster/settings
+{
+  "persistent": {
+    "cluster.routing.rebalance.enable": "all"
+  }
+}
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "primaries"
+  }
+}
+PUT /_cluster/settings
+{
+  "persistent": {
+    "cluster.routing.rebalance.enable": "none"
+  }
+}
+
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.enable": null
+  }
+}
+
+GET /_security/role/ne-insurance-admin
+GET /_security/role_mapping/ne-insurance-admin
+
+# possible values:
+# always, indices_primaries_active, indices_all_active
+PUT /_cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.allow_rebalance": "indices_all_active"
+  }
+}
+PUT /_cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.cluster_concurrent_rebalance": "16"
+  }
+}
+PUT /_cluster/settings
+{
+  "persistent": {
+    "index.routing.allocation.total_shards_per_node": -1
+  }
+}
+
+PUT /%3Ceip-eip1015-metrics-stg-15-%7Bnow%2Fd%7D-000001%3E
+{
+  "aliases": {
+    "ra-eip-eip1015-metrics-stg-15": {
+      "is_write_index": true
+    }
+  }
+}
+DELETE eip-eip1015-metrics-pro-35-2024.10.22-000001
+DELETE ra-eip-eip1015-metrics-stg-15
+DELETE ra-test-eip1015
+
+DELETE /_snapshot/mpipro/every-hour-iil86cnord-ofmkr7k_nqq
+
+POST /_snapshot/mpipro/pro-westeurope-iuhhckybqtmkxadkxxwr7g/_restore?wait_for_completion=true
+{
+  "indices": ["prod-go_waf-waf5-2025.01.17-001486","prod-go_waf-waf5-2025.01.17-001487","prod-go_waf-waf5-2025.01.17-001488","prod-go_waf-waf5-2025.01.17-001489","prod-go_waf-waf5-2025.01.18-001490","prod-go_waf-waf5-2025.01.18-001491","prod-go_waf-waf5-2025.01.19-001492"],
+  "ignore_unavailable": true,
+  "include_global_state": false,
+  "rename_pattern": "(.+)",
+  "rename_replacement": "restored4_$1",
+  "include_aliases": true,
+  "index_settings": {"index": {"lifecycle": {"name": "reindex-ilm"}}}
+}
+
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": "eip-eip1015-dev*",
+        "alias": "eip-1015"
+      }
+    },
+        {
+      "add": {
+        "index": "eip-eip1015-stg*",
+        "alias": "eip-1015"
+      }
+    },
+        {
+      "add": {
+        "index": "eip-eip1015-pro*",
+        "alias": "eip-1015"
+      }
+    }
+  ]
+}
+POST be-insurance-global-60-2024.07*/_forcemerge
+
+GET /_security/api_key?id=fp8XNYoBimlD5fDIHwYR
+
+# force move shards
+POST /_cluster/reroute
+{
+  "commands": [
+    {
+      "move": {
+        "index": "services.logs.siteminder.prd-2022.12",
+        "shard": 2,
+        "from_node": "esnode-dh-2",
+        "to_node": "esnode-dc-2"
+      }
+    }
+  ]
+}
+
+PUT _watcher/watch/eip_devint_healthcheck_daily_reporting
+{
+  "trigger" : {"schedule" : {"daily" : { "at" : "07:00" }}
+  },
+  "actions" : {
+    "email_admin" : {
+      "email": {
+        "to": ["DL_EIP_PF_L2_AXAGO@axa.com","DL_EIP_PF_L3_AXAGO@axa.com"],
+        "subject": "[EIP][DEVINT] healthcheck daily reporting",
+        "attachments" : {
+          "eip_devint_healthcheck_daily_reporting.pdf" : {
+            "reporting" : {
+              "url": "https://logboard.corp.intraxa/s/duty-monitoring/api/reporting/generate/printablePdfV2?jobParams=%28browserTimezone%3AEurope%2FParis%2Clayout%3A%28dimensions%3A%28height%3A2583.984375%2Cwidth%3A2371.25%29%2Cid%3Apreserve_layout%29%2ClocatorParams%3A%21%28%28id%3ADASHBOARD_APP_LOCATOR%2Cparams%3A%28dashboardId%3Adf650130-5b85-11ed-a752-a3cd08f7d094%2CpreserveSavedFilters%3A%21t%2CtimeRange%3A%28from%3Anow-15m%2Cto%3Anow%29%2CuseHash%3A%21f%2CviewMode%3Aview%29%29%29%2CobjectType%3Adashboard%2Ctitle%3A%27eip%20-%20platform%20technical%20-%20heartbeat%20-%20duty%20monitoring%20LAB%20DEV%20INT%27%2Cversion%3A%278.11.3%27%29",
+              "retries":40,
+              "interval":"15s",
+              "auth":{
+                "basic":{
+                  "username":"elastic",
+                  "password":"xxxxxxxxxxxx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster": {
+      "remote": {
+        "logboard-pp": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zqagoa2131.prprivmgmt.intraxa:9300",
+            "zqagoa212d.prprivmgmt.intraxa:9300",
+            "zqagoa212e.prprivmgmt.intraxa:9300"
+          ]
+        },
+        "logboard-mon": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zqagoa216e.prprivmgmt.intraxa:9300",
+            "zqagoa21af.prprivmgmt.intraxa:9300",
+            "zqagoa21a7.prprivmgmt.intraxa:9300"
+          ]
+        },
+        "logboard-prod": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zpagoa20bc.prprivmgmt.intraxa:9300",
+            "zpagoa20bb.prprivmgmt.intraxa:9300",
+            "zpagoa20b9.prprivmgmt.intraxa:9300"
+          ]
+        }
+      }
+    },
+    "xpack": {
+      "monitoring": {
+        "collection": {
+          "enabled": "true"
+        }
+      }
+    }
+  }
+}
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster.remote.*": null 
+  }
+}
+
+GET .security-7/
+
+PUT */_settings
+{
+  "index.routing.allocation.exclude._name": "esnode-mvo-3"
+}
+
+GET _nodes/stats
+
+POST _nodes/reload_secure_settings
+PUT /_cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.exclude._name": "esnode-m-2"
+  }
+}
+GET /_cat/allocation?v=true
+
+GET /_cluster/state
+PUT /.security-7/_settings
+{
+  "index" : {
+    "number_of_replicas" : 1
+  }
+}
+
+POST _aliases
+{
+  "actions": [
+    {
+      "add": {
+        "index": ".monitoring-es-*",
+        "alias": "monitoring-es"
+      }
+    }
+  ]
+}
+
+
+
+PUT _cluster/settings
+{
+  "persistent": {
+    "cluster": {
+      "remote": {
+        "logboard-pp": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zqagoa2131.prprivmgmt.intraxa:9300",
+            "zqagoa212d.prprivmgmt.intraxa:9300",
+            "zqagoa212e.prprivmgmt.intraxa:9300"
+          ]
+        },
+        "logboard-be": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zpagoa20f4.prprivmgmt.intraxa:9300",
+            "zpagoa20f7.prprivmgmt.intraxa:9300",
+            "zpagoa20f8.prprivmgmt.intraxa:9300"
+          ]
+        },
+        "logboard-mon": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zqagoa216e.prprivmgmt.intraxa:9300",
+            "zqagoa21af.prprivmgmt.intraxa:9300",
+            "zqagoa21a7.prprivmgmt.intraxa:9300"
+          ]
+        },
+        "logboard-prod": {
+          "mode": "sniff",
+          "skip_unavailable": "false",
+          "node_connections": "3",
+          "seeds": [
+            "zpagoa20bc.prprivmgmt.intraxa:9300",
+            "zpagoa20bb.prprivmgmt.intraxa:9300",
+            "zpagoa20b9.prprivmgmt.intraxa:9300"
+          ]
+        }
+      }
+    },
+    "xpack": {
+      "monitoring": {
+        "collection": {
+          "enabled": "true"
+        }
+      }
+    }
+  }
+}
+PUT /prod-go_waf-waf5*
+{
+  "settings": {
+    "index.number_of_shards": 2
+  }
+}
+PUT eip-eip1015-*/_mapping
+{
+  "properties": {
+    "eip": {
+      "properties": {
+        "http": {
+          "properties": {
+            "request": {
+              "properties": {
+                "headers": {
+                  "properties": {
+                    "scheduler": {
+                      "type": "keyword"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+GET all_data/_search
+{
+  "size": 0,
+  "aggs": {
+    "clients": {
+      "terms": {
+        "field": "identification.client",
+    "size": 400
+      }
+    }
+  }
+}
+GET all_data/_search
+{
+  "size": 0,
+  "aggs": {
+    "clients": {
+      "terms": {
+        "field": "identification.customer",
+    "size": 400
+      }
+    }
+  }
+}
+GET all_data/_search
+{
+  "size": 0,
+  "aggs": {
+    "clients": {
+      "terms": {
+        "field": "identification.application",
+    "size": 400
+      }
+    }
+  }
+}
+
+GET all_data/_search
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "@timestamp": {
+              "gte": "now-2d",
+              "lte": "now"
+            }
+          }
+        }
+      ],
+      "should": [
+        {
+          "term": {
+            "identification.client": {
+              "value": "be-iam"
+            }
+          }
+        },
+        {
+          "term": {
+            "identification.client": {
+              "value": "be-eip"
+            }
+          }
+        },
+        {
+          "term": {
+            "identification.client": {
+              "value": "be-insurance"
+            }
+          }
+        }
+      ],
+      "minimum_should_match": 1
+    }
+  },
+  "aggs": {
+    "clients": {
+      "terms": {
+        "field": "identification.client"
+      },
+      "aggs": {
+        "sum_size_by_client": {
+          "sum": {
+            "field": "_size"
+          }
+        },
+        "apps": {
+          "terms": {
+            "field": "identification.application"
+          },
+          "aggs": {
+            "size_by_app": {
+              "sum": {
+                "field": "_size"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+ 
+
